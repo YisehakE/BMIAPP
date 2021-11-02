@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/YisehakE/BMIAPP/issues"
   },
-  "homepage": "https://github.com/YisehakE/BMIAPP#readme"
+  "homepage": "https://github.com/YisehakE/BMIAPP#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
