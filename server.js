@@ -1,3 +1,5 @@
+
+/*
 const fs = require("fs") // File System Module
 
 //OR
@@ -26,12 +28,14 @@ const fs = require("fs") // File System Module
 //     console.log(err ? err : file);
 // })  
 
-//
+*/
+
+/*
+
+//LOCAL VERSION TO SERVE PORT (w/out express)
 const file = fs.readFileSync("./index.html", "utf8");
 
-
 const http = require("http");
-
 const server = http.createServer(
     (request, response) => {
         response.writeHead(200, { "Content-Type": "text/html" });
@@ -41,8 +45,6 @@ const server = http.createServer(
     }
 );
 
-
-
 //NOTE: WANT TO USE PORT NUMBER > 3000 because anything lower might be 
 //Already used by computer for other things
 // server.listen(7000)
@@ -51,3 +53,23 @@ server.listen(PORT);
 
 console.log(`Server is running on port ${PORT}`);
 
+*/
+
+
+//LOCAL VERSION TO SERVE PORT (with Express)
+const path = require("path");
+const express = require("express");
+const app = express();
+
+const PORT = process.env.PORT || 7000;
+
+app.use(express.static(path.join(__dirname, "index.html")));
+
+
+app.get("/", (request, response) => {
+    response.sendFile(path.join(__dirname, "app", "index.html"))
+})
+
+app.listen(PORT, () => {
+    console.log(`Express app is listening on port ${PORT}`);
+})
