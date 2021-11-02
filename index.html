@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <link
+      href="https://unpkg.com/@primer/css@^16.0.0/dist/primer.css"
+      rel="stylesheet"
+    />
+    <style>
+      .input-block {
+        width: 100% !important;
+        margin-right: 0 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="Header py-5 mb-5">
+      <div class="mx-auto h1 text-center">Body Mass Index Calculator</div>
+    </div>
+
+    <!-- FORM -->
+    <div class="container-lg clearfix">
+      <div class="col-3 float-right p-4"></div>
+      <div class="col-6 float-right border p-4">
+        <div>Tell Us About Yourself</div>
+        <form id="form">
+          <div class="form-group">
+            <div class="form-group-header">
+              <label for="age">Age</label>
+            </div>
+            <div class="form-group-body">
+              <input
+                class="form-control input-block"
+                type="number"
+                id="age"
+                name="age"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group-header">
+              <label>Gender</label>
+            </div>
+            <div class="form-group-body">
+              <select class="form-select input-block" value="" id="gender">
+                <option value=""></option>
+                <option value="male">Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group-header">
+              <label for="height">Height (cm)</label>
+            </div>
+            <div class="form-group-body">
+              <input
+                class="form-control input-block"
+                type="number"
+                id="height"
+                name="height"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-group-header">
+              <label for="weight">Weight (kg)</label>
+            </div>
+            <div class="form-group-body">
+              <input
+                class="form-control input-block"
+                type="number"
+                id="weight"
+                name="weight"
+              />
+            </div>
+          </div>
+          <div class="mt-5 form-actions">
+            <button
+              class="btn"
+              type="submit"
+              class="btn btn-primary"
+              id="submit"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="col-3 float-right p-4"></div>
+    </div>
+
+    <!-- Result -->
+    <div class="container-lg clearfix">
+      <div class="col-3 float-right p-4"></div>
+      <div class="mt-5 col-6 float-right text-center">
+        <div id="output">
+          <div id="result" class="f3-light"></div>
+          <div id="bmi" class="f1-light"></div>
+        </div>
+      </div>
+      <div class="col-3 float-right p-4"></div>
+    </div>
+
+    <script>
+      document.getElementById("submit").addEventListener("click", validateForm);
+
+      const age = document.getElementById("age");
+      const height = document.getElementById("height");
+      const weight = document.getElementById("weight");
+      const gender = document.getElementById("gender");
+
+      const output = document.getElementById("output");
+      const result = document.getElementById("result");
+      const bmi = document.getElementById("bmi");
+
+      function validateForm(event) {
+        clear();
+        event.preventDefault();
+        if (
+          age.value == "" ||
+          height.value == "" ||
+          weight.value == "" ||
+          gender.value == ""
+        ) {
+          output.className = "flash flash-error";
+          result.innerText = "All fields are required!";
+        } else {
+          calcBmi();
+        }
+      }
+
+      function clear() {
+        result.innerHTML = "";
+        bmi.innerHTML = "";
+        output.className = "";
+      }
+
+      function calcBmi() {
+        const p = [age.value, height.value, weight.value, gender.value];
+        const bmiVal =
+          Number(p[2]) / (((Number(p[1]) / 100) * Number(p[1])) / 100);
+
+        if (bmiVal < 18.5) {
+          output.className = "flash";
+          result.innerText = "Underweight";
+        } else if (bmiVal <= 24.9) {
+          output.className = "flash flash-success";
+          result.innerText = "Healthy";
+        } else if (bmiVal <= 29.9) {
+          output.className = "flash flash-warn";
+          result.innerText = "Overweight";
+        } else if (bmiVal <= 34.9) {
+          output.className = "flash flash-error";
+          result.innerText = "Obese";
+        } else {
+          output.className = "flash flash-error";
+          result.innerText = "Extremely obese";
+        }
+
+        bmi.innerText = "BMI: " + parseFloat(bmiVal).toFixed(2);
+      }
+    </script>
+  </body>
+</html>
